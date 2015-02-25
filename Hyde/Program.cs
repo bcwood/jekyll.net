@@ -1,4 +1,5 @@
 ﻿using System;
+using Hyde.Exceptions;
 
 namespace Hyde
 {
@@ -6,19 +7,34 @@ namespace Hyde
 	{
 		public static void Main(string[] args)
 		{
-			var command = Command.Parse(args);
+			Command command;
 
-			if (command == null)
+			try
 			{
-				Console.WriteLine("No command specified.");
-				Console.WriteLine("Usage: hyde <command> [options]");
-				Console.WriteLine("Use 'hyde help' for a list of available commands.");
-				return;
+				command = Command.Parse(args);
 			}
-			else if (command.Type == CommandType.Unknown)
+			catch (HydeException ex)
 			{
-				Console.WriteLine("Unknown command: " + args[0]);
-				Console.WriteLine("Use 'hyde help' for a list of available commands.");
+				Console.WriteLine(ex.Message);
+
+				if (ex is MissingCommandException)
+				{
+					Console.WriteLine("Usage: hyde <command> [options]");
+					Console.WriteLine("Use 'hyde help' for a list of available commands.");
+				}
+				else if (ex is UnknownCommandException)
+				{
+					Console.WriteLine("Use 'hyde help' for a list of available commands.");
+				}
+				else if (ex is UnknownOptionException || ex is MissingOptionArgumentException)
+				{
+					Console.WriteLine("Use 'hyde {0} help' for help with usage of that command.", args[0]);
+				}
+				else
+				{
+					throw;
+				}
+
 				return;
 			}
 

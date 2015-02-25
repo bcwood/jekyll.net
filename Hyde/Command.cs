@@ -1,31 +1,32 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyde.Exceptions;
 
 namespace Hyde
 {
 	public enum CommandType
 	{
 		Build,
-		Help,
-		Unknown
+		Help
 	}
 
 	public class Command
 	{
 		public CommandType Type { get; set; }
-		public string[] Args { get; set; }
+		public List<Option> Options { get; set; }
 
 		public static Command Parse(string[] args)
 		{
 			if (!args.Any())
 			{
-				return null;
+				throw new MissingCommandException();
 			}
 
-			var commandArg = args[0];
+			var commandName = args[0];
 			var command = new Command();
 
-			switch (commandArg)
+			switch (commandName.ToLower())
 			{
 				case "build":
 					command.Type = CommandType.Build;
@@ -36,12 +37,10 @@ namespace Hyde
 					break;
 
 				default:
-					command.Type = CommandType.Unknown;
-					break;
+					throw new UnknownCommandException(commandName);
 			}
 
-			// TODO: parse command options
-
+			command.Options = Option.ParseOptions(args);
 			return command;
 		}
 

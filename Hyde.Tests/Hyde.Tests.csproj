@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BAB49B7E-317B-4730-A1C6-3D1E1CA67F5B}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{D9E5D25F-7E11-4C32-83A1-31810B735C46}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Hyde</RootNamespace>
-    <AssemblyName>Hyde</AssemblyName>
+    <RootNamespace>Hyde.Tests</RootNamespace>
+    <AssemblyName>Hyde.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,18 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command.cs" />
-    <Compile Include="Exceptions\HydeException.cs" />
-    <Compile Include="Exceptions\MissingCommandException.cs" />
-    <Compile Include="Exceptions\MissingOptionArgumentException.cs" />
-    <Compile Include="Exceptions\UnknownCommandException.cs" />
-    <Compile Include="Exceptions\UnknownOptionException.cs" />
-    <Compile Include="Option.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="CommandTests.cs" />
+    <Compile Include="OptionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <ProjectReference Include="..\Hyde\Hyde.csproj">
+      <Project>{bab49b7e-317b-4730-a1c6-3d1e1ca67f5b}</Project>
+      <Name>Hyde</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
