@@ -1,3 +1,3 @@
 # jekyll.net
 
-Jekyll-inspired static site generator written in C#
+[Jekyll](http://jekyllrb.com/)-inspired static site generator written in C#
